@@ -46,7 +46,7 @@ export class AppComponent {
       "email" : form.email,
       "photo" : form.photo
     });
-
+    alert('data save successfully');
   }
 
   generateUUID() {
