@@ -1,7 +1,7 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div>
   <form [formGroup]="userForm" (ngSubmit)="createUser(userForm.value)">
-    <div>
+    <div class="form-group">
         <div>
           <h3 style="text-align: left; color: #E86A18">User info</h3>
         </div>
@@ -10,25 +10,60 @@
             <div>
               <input placeholder="Name" formControlName="name" name="name" />
             </div>
+            <br>
             <div>
               <input placeholder="Hobbies" formControlName="hobbie" name="hobbie" />
             </div>
+            <br>
             <div>
                 <input placeholder="Birthday" formControlName="birthday" name="birthday" />
             </div>
+            <br>
             <div>
                 <input placeholder="Email" formControlName="email" name="email" />
             </div>
+            <br>
             <div>
                 <input placeholder="Photo" formControlName="photo" name="photo" />
             </div>
           </fieldset>
+          <br>
         </div>
-        <div class="row">
-            <button type="submit">Create</button>
-          </div>
+        <div class="btn-group btn-group-xs">
+          <button class="btn btn-primary" type="submit">Create</button>
+          <button class="btn btn-primary" type="button" (click)="update(userForm.value)">Update</button>
+        </div>
       </div>
   </form>
 </div>
+
+
+<table class="table table-hover" *ngIf="!userDatailEnable">
+    <thead>
+        <tr>
+        <th>Name</th>
+        <th>hobbie</th>
+        <th>Birthday</th>
+        <th>Email</th>
+        <th>Photo</th>
+      </tr>
+    </thead>
+      <tbody>
+        <tr *ngFor="let user of userItems | async" (click)="userDetail(user)">
+          <td>{{user.name}}</td>
+          <td>{{user.hobbie}}</td>
+          <td>{{user.birthday}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.photo}}</td>
+        </tr>
+      </tbody>  
+</table>
+
+<div class="card" *ngIf="userDatailEnable">
+    <div class="card-block">
+      <h4 class="card-title">{{editUser.name}}</h4>
+      <a href="#" class="btn btn-primary" (click)="remove(userForm.value)">Remove</a>
+    </div>
+  </div>
 
 

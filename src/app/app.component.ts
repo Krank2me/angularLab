@@ -18,6 +18,8 @@ export class AppComponent {
   public userForm : FormGroup;
   userItems: any;
   user;
+  userDatailEnable : boolean ;
+  editUser : any;
 
   constructor(public afDB: AngularFireDatabase, private fb : FormBuilder) {
     this.userItems = afDB.list('users').valueChanges();
@@ -33,13 +35,15 @@ export class AppComponent {
       photo : []
     });
 
+    this.userDatailEnable = false;
+
   }
 
   createUser(form : any){
-    console.log(form);
+    //console.log(form);
     const itemsRef = this.afDB.list('users');
     itemsRef.push({
-      id: this.generateUUID(),
+      "id": this.generateUUID(),
       "name" : form.name,
       "hobbie" : form.hobbie,
       "birthday" : form.birthday,
@@ -47,6 +51,34 @@ export class AppComponent {
       "photo" : form.photo
     });
     alert('data save successfully');
+  }
+
+  update(form : any) {
+    console.log(form);
+    console.log("id: ", form.id);
+    const itemsRef = this.afDB.list('users');
+    itemsRef.update(form.id, {
+      "name" : form.name,
+      "hobbie" : form.hobbie,
+      "birthday" : form.birthday,
+      "email" : form.email,
+      "photo" : form.photo
+    });
+    alert('data update successfully');
+  }
+
+  remove(form : any) {
+    console.log(form);
+    console.log("id: ", form.id);
+    const itemsRef = this.afDB.list('users');
+    itemsRef.remove(form.id);
+    alert('data deleted successfully');
+  }
+
+  userDetail(user) {
+    this.userDatailEnable = true;
+    console.log("etsito!", user);
+    this.editUser = user;
   }
 
   generateUUID() {
